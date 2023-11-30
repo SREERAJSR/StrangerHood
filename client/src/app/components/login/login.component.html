@@ -1,0 +1,63 @@
+<div class="main-container">
+
+    <div class="img-container">
+
+    </div>
+
+    <div class="right-side-part">
+
+        <div class="login-header-part">
+
+            <img src="../../../assets/logo/1.png" alt="">
+
+        </div>
+        <div class="form-div-part">
+
+            <form [formGroup]="loginFormControl" (ngSubmit)="onSubmitLoginForm()">
+                
+                <div class="form-area">
+                <mat-form-field  color="primary" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput formControlName="email" placeholder="abc@gmail.com">
+                    <mat-error *ngIf="loginFormControl.get('email')?.hasError('email') &&
+                    !loginFormControl.get('Email')?.hasError('required')">Please enter a valid email address </mat-error>
+                   <mat-error *ngIf="loginFormControl.get('email')?.hasError('required')" >Email is <strong>Required</strong></mat-error>
+
+                </mat-form-field>
+            </div>
+            <div class="form-div-area email-area">
+                <mat-form-field color="primary"  appearance="outline">
+                    <mat-label>Password</mat-label>
+                        <input type="password"  matInput formControlName="password">
+                        <mat-error *ngIf="loginFormControl.get('password')?.hasError('required')">Password is <strong>required</strong></mat-error>
+                        <mat-error *ngIf="loginFormControl.get('password')?.hasError('minlength')"> Password must be at least 8 characters long</mat-error>
+                        <mat-error *ngIf="loginFormControl.get('password')?.hasError('pattern')">   Password must include lowercase, uppercase, digit, and special character.</mat-error>
+                </mat-form-field>
+    
+                </div>
+                <div class="forgot-password">
+                  <a href=""><p>forgot password?</p></a> 
+                </div>
+
+                <div class="button-area">
+                    <div class="login-button">
+                        <button mat-raised-button color="primary" >Login</button>
+                    </div>
+                </div>
+
+                <div class="footer-area">
+               <p><strong>sign with google</strong></p>
+       <a href=""><img  id="gBtn" src="../../../assets/icons/google.png" alt=""></a>
+
+                </div>
+
+                       
+
+            </form>
+            
+        </div>
+
+
+    </div>
+
+</div>
