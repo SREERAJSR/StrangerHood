@@ -6,21 +6,26 @@
 
                 <h1 class="signup-heading text-center mt-4" >Sign-up</h1>
 
-                <div class="example-container ">
-                            <mat-form-field class="name-class" color="primary"  >
+
+               <form [formGroup]="signupFormControl" (ngSubmit)="onSignUpFormSubmit()">
+                            <mat-form-field class="name-class" color="primary" >
                             <mat-label>First Name</mat-label>
-                            <input matInput required >
-                            
+                            <input matInput required formControlName="firstname" >
+                            <mat-error *ngIf="signupFormControl.get('firstname')?.hasError('required')"> Firstname is required</mat-error>
                           </mat-form-field>
                     <mat-form-field  class="name-class "  color="primary">
                         <mat-label>Last Name</mat-label>
-                        <input matInput required >
-                       
+                        <input matInput required  formControlName="lastname">
+                        <mat-error *ngIf="signupFormControl.get('lastname')?.hasError('required')"> lastname is required</mat-error>
+
                       </mat-form-field>
                       <div class="mb-4">
                         <mat-form-field style="display: block;"  class="mt-4" color="primary">
                             <mat-label>Email</mat-label>
-                            <input matInput placeholder="pat@example.com" required>
+                            <input matInput placeholder="pat@example.com" formControlName="email" required>
+                            <mat-error *ngIf="signupFormControl.get('email')?.hasError('required')"> Email is required</mat-error>
+                            <mat-error *ngIf="signupFormControl.get('email')?.hasError('email')">Enter a valid email</mat-error>
+
                  
                           </mat-form-field>
                                           
@@ -28,35 +33,44 @@
               
                       <mat-form-field class="mb-4"  style="display: block;">
                         <mat-label>Phone number</mat-label>
-                        <input type="tel" matInput formControlName="tel" required> 
+                        <input type="tel" matInput formControlName="mobile" required maxlength="10"> 
                         <mat-icon matSuffix>phone</mat-icon>
-                      </mat-form-field>
+                        <mat-error *ngIf="signupFormControl.get('mobile')?.hasError('required')">Mobiel number is required</mat-error>
+                        <mat-error *ngIf="signupFormControl.get('mobile')?.hasError('minlength')">Mobiel number must be 10 numbers</mat-error>
 
-                      
-                      <mat-label>Gender:</mat-label>
-                      <mat-radio-group color="primary" aria-label="Select an option">
+                      </mat-form-field>
+                      <mat-label style="color: grey;">Gender:</mat-label>
+                      <mat-radio-group formControlName="gender" color="primary" aria-label="Select an option">
                         <mat-radio-button value="Male">Male</mat-radio-button>
                         <mat-radio-button value="Female">Female</mat-radio-button>
                       </mat-radio-group>
-                    </div>
+
                     <mat-form-field class="pass-class">
                         <mat-label>Enter your password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'">
+                        <input #pass matInput [type]="hide ? 'password' : 'text'" formControlName="password">
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
+                        <mat-error *ngIf="signupFormControl.get('password')?.hasError('required')">password is required</mat-error>
+                        <mat-error *ngIf="signupFormControl.get('password')?.hasError('pattern')">  Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character. </mat-error>
+
                       </mat-form-field>
                       <mat-form-field class="pass-class">
                         <mat-label>Renter password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'">
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        <input #renteredPass matInput [type]="hide1 ? 'password' : 'text'" formControlName="renteredpassword">
+                        <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                          <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
+                        <!-- <mat-error *ngIf="signupFormControl.get('renteredpassword')?.valid">password must be same</mat-error> -->
+                        <mat-error *ngIf="signupFormControl.get('renteredpassword')?.hasError('required')">password is required</mat-error>
+                        <mat-error *ngIf="signupFormControl.get('renteredpassword')?.hasError('pattern')"> contain at least one lowercase letter, one uppercase letter,one digit,and one special character.</mat-error>
+
                       </mat-form-field>
                       <div class="text-center ">
                         
-                          <button  style="width: 200px; height: 50px;" mat-raised-button color="primary">Signup</button>
+                          <button type="submit"  style="width: 200px; height: 50px;" mat-raised-button color="primary">Signup</button>
                       </div>
+                    </form>
 
             </div>
 
