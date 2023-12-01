@@ -1,0 +1,37 @@
+<div class="container-fluid">
+
+    <div class="row mx-auto justify-content-center ">
+
+        <div class="col-12 col-sm-10 col-md-7 col-lg-6 col-xl-5 otp-div">
+
+            <h2 class="text-center otp-heading mt-4">{{'enter otp '| uppercase}}</h2>
+
+            <form [formGroup]="otpForm" >
+            <div class="otp-form">
+          
+                <mat-form-field appearance="outline">
+                    <input  type="password" matInput formControlName ="first" maxlength="1">
+                    
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <input  type="password" matInput formControlName="second" maxlength="1">
+                    
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <input  type="password" matInput formControlName="lastname"maxlength="1">
+                    
+                </mat-form-field >
+                <mat-form-field appearance="outline">
+                    <input  type="password" matInput formControlName="third" maxlength="1">
+                    
+                </mat-form-field>
+
+            </div>
+            <div class="text-center submit-btn">
+                <button  type="submit" mat-raised-button color="primary">Submit</button>
+            </div>
+        </form>
+            </div>
+            
+        </div>
+    </div>

@@ -7,12 +7,15 @@ import { LoginComponent } from './components/user/login/login.component';
 import { MaterialModule } from './material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './components/user/signup/signup.component';
+import { SignupOtpComponent } from './components/user/signup-otp/signup-otp.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
+    SignupOtpComponent,
+
 
   ],
   imports: [

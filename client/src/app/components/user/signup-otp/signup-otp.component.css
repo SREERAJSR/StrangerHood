@@ -6,27 +6,29 @@
   }
   .row{
     width: 80%;
-    height: 100%;
+    height: 60%;
     background-image: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
   }
 
-  .signup-div{
-     background-color: white;
+  .otp-div{
+    background-color: white;
     margin-top: 50px;
     border-radius: 15px;
     color: rgb(194, 192, 192);
   }
-  .signup-heading{
-    font-size: xx-large;
 
+  .otp-heading{
+    font-size: xx-large;
 font-family: Georgia, 'Times New Roman', Times, serif;
+
+  }
+  mat-form-field {
+    width: 25%;    
   }
 
-.name-class{
-width: 50%;
-}
-
-
-.pass-class{
-display: block;
+  .submit-btn button{
+    margin-top: 40px;
+    width: 200px;
+    height: 50px;
+    border-radius: 15px;
 }
