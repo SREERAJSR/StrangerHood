@@ -4,10 +4,13 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 
 const materials=[MatInputModule,MatButtonModule,MatDividerModule
-,MatFormFieldModule,MatIconModule]
+,MatFormFieldModule,MatIconModule,MatCardModule,MatRadioModule]
 
 @NgModule({
   imports: [materials],
