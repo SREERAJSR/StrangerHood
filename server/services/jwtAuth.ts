@@ -5,10 +5,15 @@ import { reject } from 'promise';
 
 const ACCESSTOKEN_SECRET_KEY:string= configKeys().ACCESSTOKEN_SECRET_KEY;
 
-export const createToken =(userData:User_Struct):string=>{
+export const createToken = async(userData:any):Promise<string |boolean>=>{
+    try{
+        const token:string =  await jwt.sign(userData,ACCESSTOKEN_SECRET_KEY,{expiresIn:'100 min'})
+        return token
+    }catch(err){
+        console.log(err);
+        return false
+    }
 
-    const token =  jwt.sign(userData,ACCESSTOKEN_SECRET_KEY,{expiresIn:'100 min'})
-    return token
       }  
 
 

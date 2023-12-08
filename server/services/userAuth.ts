@@ -2,7 +2,7 @@
 
 import User from "../model/user_schema"
 import bcrypt, { hash } from 'bcrypt'
-import { User_Struct } from "../types/user_interface";
+import { User_Struct, userDbStructure } from "../types/user_interface";
 import jwt from 'jsonwebtoken';
 import configKeys from "../configs/configs";
 import { Twilio } from "twilio";
@@ -11,13 +11,15 @@ const accountSid = configKeys().TWILIO_SID
 const authToken = configKeys().TWILIO_AUTHTOKEN
 const verifySid = configKeys().TWILIO_VERIFY_SID
 
-export const checkEmailIsAlreadyRegistered = async (email: string): Promise<boolean> => {
+export const checkEmailIsAlreadyRegistered = async (email: string): Promise<userDbStructure |boolean> => {
     try {
       // Find the user with the given email
       const existingUser = await User.findOne({ email: email });
-  
       // If the user exists, return true; otherwise, return false
-      return !!existingUser;
+      if(!existingUser){
+        return false
+      }
+      return existingUser
     } catch (error) {
       // Handle any errors that occur during the check
       console.error(error);
@@ -71,4 +73,15 @@ export async function verifyTheOtp(otp: string, mobile: string): Promise<string 
     console.error('OTP verification error:', err);
     return undefined;
   }
+}
+
+export async function  verifyThePassword(password:string,dbPass:string):Promise<boolean> {
+  try{
+     const status:boolean =await bcrypt.compare(password,dbPass)
+     return status
+  }catch(err){
+    console.log('Error in hasing the password');
+    return false;
+  }
+
 }

@@ -32,3 +32,15 @@ export interface userOtpDecodedData{
   iat: number,
   exp: number
 }
+
+export interface userLoginBody{
+  email:string,
+  password:string
+}
+
+export interface clientUserInfo{
+  firstname:string,
+  lastname:string,
+  mobile:number,
+  gender:string
+}

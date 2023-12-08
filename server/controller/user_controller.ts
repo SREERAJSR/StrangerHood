@@ -1,10 +1,11 @@
 
 import { Request,Response } from "express";
-import  { User_Struct, otpRequestBody, userDbStructure, userOtpDecodedData}  from "../types/user_interface";
-import { checkEmailIsAlreadyRegistered, hashThePassword, sendOtp, verifyTheOtp} from "../services/userAuth";
+import  { User_Struct, clientUserInfo, otpRequestBody, userDbStructure, userLoginBody, userOtpDecodedData}  from "../types/user_interface";
+import { checkEmailIsAlreadyRegistered, hashThePassword, sendOtp, verifyTheOtp, verifyThePassword} from "../services/userAuth";
 import User from "../model/user_schema";
 import { createToken, extractDataFromToken } from "../services/jwtAuth";
 import { saveUserInDb } from "../services/userDb";
+import { HttpStatus } from "../types/http";
 
 
 export  const registerUser= async(req:Request,res:Response)=>{
@@ -19,7 +20,7 @@ export  const registerUser= async(req:Request,res:Response)=>{
             password: req.body.password,
             renteredpassword: req.body.renteredpassword
         }
-        const existingUser = await checkEmailIsAlreadyRegistered(userRegisterDetails.email)
+        const existingUser:boolean|userDbStructure = await checkEmailIsAlreadyRegistered(userRegisterDetails.email)
         if(existingUser){
             res.status(400).json({error:'Email is already registerd'});
         }
@@ -32,8 +33,8 @@ export  const registerUser= async(req:Request,res:Response)=>{
         userRegisterDetails.renteredpassword= hashedPass
         const otpStatus :string | undefined = await sendOtp(userRegisterDetails.mobile)
         console.log(otpStatus,'from here');
-        const token:string = createToken(userRegisterDetails)
-        res.status(201).json({"token":token,"otp-status":otpStatus})
+        const token:string |boolean=  await createToken(userRegisterDetails)
+        res.status(202).json({"token":token,"otp-status":otpStatus})
 
     }catch(error){
         console.error(error);
@@ -68,9 +69,39 @@ res.status(201).json({"message":"register sucess","userData":userData})
 }
     } 
 }catch(error){  
-console.log(error);
+console.log(error);     
 res.status(500).json({"error":"Internal server error"})
 }
 
 }
+export async function loginUser(req: Request, res: Response) {
+    try {
+        const { email, password }: userLoginBody = req.body;
+        const existingUser: boolean | userDbStructure = await checkEmailIsAlreadyRegistered(email);
 
+        if (!existingUser) {
+            return res.status(HttpStatus.UNAUTHORIZED).json({ "error": "You are not an existing user with this email" });
+        }
+        const user: userDbStructure = existingUser as userDbStructure;
+        const status: boolean = await verifyThePassword(password, user.password);
+        if (status===false) {
+            throw new Error("Password is not correct");
+        }
+        const userClientInfo: clientUserInfo = {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            gender: user.gender,
+            mobile: user.mobile
+        };
+        const token: string | boolean = await createToken(userClientInfo);
+        if (!token) {
+            throw new Error('Token error');
+        }
+
+        res.status(HttpStatus.ACCEPTED).json({ "token": token, userClientInfo });
+
+    } catch (err:any) {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ "error": "Internal Server Error", "message": err.message });
+    }
+
+}
