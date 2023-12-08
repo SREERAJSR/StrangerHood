@@ -14,7 +14,6 @@ loginFormControl = new  FormGroup ({
   
 })
 
-
 onSubmitLoginForm(){
   console.log(this.loginFormControl.get('password'));
 }

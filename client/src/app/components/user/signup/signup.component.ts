@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { login } from 'src/app/app-state/auth/auth.actions';
+import { AuthStateInterface } from 'src/app/models/state.models';
+import { UserSignUpActionProps } from 'src/app/models/user.models';
 
 @Component({
   selector: 'app-signup',
@@ -7,9 +11,10 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+  constructor(private store:Store<{auth:AuthStateInterface}>){}
   hide = true;
   hide1=true
-  passError?:boolean
+  submitedData?:UserSignUpActionProps
   signupFormControl:FormGroup = new FormGroup({
     firstname:new FormControl(null,[Validators.required]),
     lastname:new FormControl(null,Validators.required),
@@ -23,11 +28,17 @@ export class SignupComponent {
 
   onSignUpFormSubmit(){
   if(this.signupFormControl.get('password')?.value!==this.signupFormControl.get('renteredpassword')?.value ){
-    this.passError=true
-
-    console.log(this.signupFormControl);
+console.log('password are not same');
   }
-
-
+  this.submitedData={
+    firstname: this.signupFormControl.value.firstname,
+    lastname: this.signupFormControl.value.lastname,
+    email: this.signupFormControl.value.email,
+    mobile: this.signupFormControl.value.mobile,
+    gender: this.signupFormControl.value.gender,
+    password: this.signupFormControl.value.password,
+    renteredpassword: this.signupFormControl.value.renteredpassword,
+  }
+this.store.dispatch(login({payload:this.submitedData}))
   }
 }

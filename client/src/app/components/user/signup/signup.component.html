@@ -61,14 +61,13 @@
                         <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                           <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                        <!-- <mat-error *ngIf="signupFormControl.get('renteredpassword')?.valid">password must be same</mat-error> -->
                         <mat-error *ngIf="signupFormControl.get('renteredpassword')?.hasError('required')">password is required</mat-error>
                         <mat-error *ngIf="signupFormControl.get('renteredpassword')?.hasError('pattern')"> contain at least one lowercase letter, one uppercase letter,one digit,and one special character.</mat-error>
 
                       </mat-form-field>
                       <div class="text-center ">
                         
-                          <button type="submit"  style="width: 200px; height: 50px;" mat-raised-button color="primary">Signup</button>
+                          <button type="submit"  style="width: 200px; height: 50px;" [disabled]="!signupFormControl.valid" mat-raised-button color="primary">Signup</button>
                       </div>
                     </form>
 
