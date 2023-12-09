@@ -42,5 +42,8 @@ export interface clientUserInfo{
   firstname:string,
   lastname:string,
   mobile:number,
-  gender:string
+  email?:string,
+  gender:string,
+  isActive?:boolean
 }
+

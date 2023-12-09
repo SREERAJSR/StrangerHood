@@ -10,10 +10,11 @@ import { SignupComponent } from './components/user/signup/signup.component';
 import { SignupOtpComponent } from './components/user/signup-otp/signup-otp.component';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './app-state/auth/auth.reducer';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './app-state/auth/auth.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     })
 
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

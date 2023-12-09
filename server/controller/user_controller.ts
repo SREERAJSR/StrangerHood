@@ -12,9 +12,9 @@ import AppError from "../utils/AppError";
 export  const registerUser= async(req:Request,res:Response,next:NextFunction)=>{
 
     try{
-        console.log(req.body);
+
         const userRegisterDetails=req.body.userData as User_Struct 
-        console.log(userRegisterDetails);
+
          const existingUser= await checkEmailIsAlreadyRegistered(userRegisterDetails.email)
          if(!existingUser){
             if(userRegisterDetails.password !==userRegisterDetails.renteredpassword){
@@ -25,10 +25,9 @@ export  const registerUser= async(req:Request,res:Response,next:NextFunction)=>{
             if(!hashedPass) throw new AppError('password hasing error',HttpStatus.INTERNAL_SERVER_ERROR)
 
             userRegisterDetails.password = hashedPass;
-            userRegisterDetails.renteredpassword= hashedPass
-
+            userRegisterDetails.renteredpassword= hashedPass 
             const otpStatus :string | undefined = await sendOtp(userRegisterDetails.mobile)
-
+console.log(otpStatus);
             if(otpStatus !=='pending')
             {throw new AppError('Twilio otp sending failed',HttpStatus.INTERNAL_SERVER_ERROR)}
             else{
@@ -43,33 +42,30 @@ export  const registerUser= async(req:Request,res:Response,next:NextFunction)=>{
  
 };
 
-export const otpHandlerAndSaveDb=async (req:Request,res:Response) :Promise<void >=>{
+export const otpHandlerAndSaveDb = async (req:Request,res:Response,next:NextFunction) :Promise<void >=>{
 
 try{
     const token = req.headers['authorization']?.split(' ')[1];
+    if(!token) throw new AppError('token didnt recieved',HttpStatus.BAD_REQUEST)
     const{otp}:otpRequestBody=req.body
 
     if(token){
   const decodedData:userOtpDecodedData |undefined= await extractDataFromToken(token)
-    if(!decodedData){
-    res.json(401).json({"error":"token error"})
-return;
-  }
+    if(!decodedData)throw new AppError('issue with token and not getted decoded data',HttpStatus.CONFLICT)
+
 
 let otpVerified :string | undefined = await verifyTheOtp(otp,decodedData.mobile)
 
 console.log(otpVerified,'from controller');
 if(otpVerified ==='approved'){
-const userData :userDbStructure | undefined= await saveUserInDb(decodedData)
-if(!userData){
-throw new Error('Error saving in db')
-}
-res.status(201).json({"message":"register sucess","userData":userData})
+const userData = await saveUserInDb(decodedData)
+console.log(userData);
+if(!userData) throw  new AppError('UserData fetching error',HttpStatus.INTERNAL_SERVER_ERROR)
+res.status(HttpStatus.CREATED).json({"message":"register sucess","userData":userData})
 }
     } 
 }catch(error){  
-console.log(error);     
-res.status(500).json({"error":"Internal server error"})
+    next(error)
 }
 
 }

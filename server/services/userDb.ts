@@ -1,9 +1,11 @@
 import User from "../model/user_schema";
-import { User_Struct, userDbStructure, userOtpDecodedData } from "../types/user_interface";
+import { HttpStatus } from "../types/http";
+import { User_Struct, clientUserInfo, userDbStructure, userOtpDecodedData } from "../types/user_interface";
+import AppError from "../utils/AppError";
 
 
 
-export async function saveUserInDb(userData: userOtpDecodedData): Promise< userDbStructure | undefined> {
+export async function saveUserInDb(userData: userOtpDecodedData): Promise<clientUserInfo> {
     try {
       const newUser = new User({
         firstname: userData.firstname,
@@ -14,11 +16,18 @@ export async function saveUserInDb(userData: userOtpDecodedData): Promise< userD
         password: userData.password
       });
       const savedData = await newUser.save();
-      console.log(savedData);
-      return savedData;
-    } catch (error) {
-      console.error('Error saving user:', error);
-      return undefined;
+      const {firstname,lastname,email,mobile,gender,isActive} = savedData.toObject();
+
+      return{
+        firstname,
+        lastname,
+        email,
+        mobile,
+        gender,
+        isActive
+      }
+    } catch (error:any) {
+      throw new AppError(error,HttpStatus.INTERNAL_SERVER_ERROR)
     }
   
   

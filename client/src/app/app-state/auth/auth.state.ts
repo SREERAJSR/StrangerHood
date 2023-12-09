@@ -7,7 +7,6 @@
         mobile:'',
         email:'',
         isLoggedIn:false,
-        token:'',
         signupError:'',
         loginError:'',
         otpVerficationError:''

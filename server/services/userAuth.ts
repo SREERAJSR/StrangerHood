@@ -39,7 +39,7 @@ throw new AppError(error.message,error.statusCode)
 
     try{ 
     const client = new Twilio(accountSid, authToken);
-     const verificationStatus=  await client.verify.v2
+     const verificationStatus =  await client.verify.v2
      .services(verifySid)
      .verifications.create({ to: `+91 ${mobile}`, channel: "sms" })
      return verificationStatus.status
