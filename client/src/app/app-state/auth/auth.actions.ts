@@ -16,3 +16,5 @@ export const otpVerificationFailure = createAction('[OTP Page] OTP Verification 
 export const login = createAction('[Login Page] Login', props<{ payload: UserLoginActionProps }>());
 export const loginSuccess = createAction('[Login Page] Login Success', props<{payload:AuthStateInterface }>());
 export const loginFailure = createAction('[Login Page] Login Failure', props<{ error: any }>());
+
+export const navigateToOtp = createAction('[Auth] Navigate to OTP');

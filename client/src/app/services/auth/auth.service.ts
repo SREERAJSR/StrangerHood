@@ -13,4 +13,8 @@ export class AuthService {
     return this.http.post(`${this.URL}/api/user/register`,{userData})
   }
 
+  setToken(token:string){
+    localStorage.setItem('token',token)
+  }
+
 }

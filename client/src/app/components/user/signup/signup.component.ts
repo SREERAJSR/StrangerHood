@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { login } from 'src/app/app-state/auth/auth.actions';
+import { login, signup } from 'src/app/app-state/auth/auth.actions';
 import { AuthStateInterface } from 'src/app/models/state.models';
 import { UserSignUpActionProps } from 'src/app/models/user.models';
 
@@ -16,13 +16,13 @@ export class SignupComponent {
   hide1=true
   submitedData?:UserSignUpActionProps
   signupFormControl:FormGroup = new FormGroup({
-    firstname:new FormControl(null,[Validators.required]),
-    lastname:new FormControl(null,Validators.required),
-    email : new FormControl(null,[Validators.required,Validators.email]),
-    mobile:new FormControl(null,[Validators.required,Validators.minLength(10)]),
+    firstname:new FormControl('sreeraj',[Validators.required]),
+    lastname:new FormControl('srr',Validators.required),
+    email : new FormControl('srees@gmail.com',[Validators.required,Validators.email]),
+    mobile:new FormControl(8547905362,[Validators.required,Validators.minLength(10)]),
     gender:new FormControl('Male',[Validators.required]),
-    password:new FormControl(null,[Validators.required,Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#]).{8,}$')]),
-    renteredpassword : new FormControl(null,[Validators.required,Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#]).{8,}$')])
+    password:new FormControl('srrA2@32Ad',[Validators.required,Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#]).{8,}$')]),
+    renteredpassword : new FormControl('srrA2@32Ad',[Validators.required,Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#]).{8,}$')])
   })
 
 
@@ -39,6 +39,6 @@ console.log('password are not same');
     password: this.signupFormControl.value.password,
     renteredpassword: this.signupFormControl.value.renteredpassword,
   }
-this.store.dispatch(login({payload:this.submitedData}))
+this.store.dispatch(signup({payload:this.submitedData}))
   }
 }

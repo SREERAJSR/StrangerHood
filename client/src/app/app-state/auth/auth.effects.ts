@@ -1,36 +1,51 @@
 import { Injectable, effect } from "@angular/core";
 import { Actions, EffectSources, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, of, switchMap } from "rxjs";
+import { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
 import { AuthService } from "src/app/services/auth/auth.service";
-import { login, loginSuccess, otpVerification, signup, signupFailure, signupSucess } from "./auth.actions";
+import { login, loginSuccess, navigateToOtp, otpVerification, signup, signupFailure, signupSucess } from "./auth.actions";
+import { Router } from "@angular/router";
+import { SignupOtpComponent } from "src/app/components/user/signup-otp/signup-otp.component";
+
+
 
 
 @Injectable()
 export  class AuthEffects{
 
-    constructor(private actions$:Actions ,private authService:AuthService){}
+    constructor(private actions$:Actions ,
+        private authService:AuthService,private router:Router){}
 
 
 signupUser$ = createEffect(()=>{    
     return this.actions$.pipe(
-        ofType(login),
+        ofType(signup),
         switchMap((action)=>
         this.authService.user_signup(action.payload).pipe(
             map((response:any):any=>{
-                if(response.otpstatus==='pending'){
-                    return signupSucess()
+                console.log(response);
+                if(response.otpStatus==='pending'){
+                    this.authService.setToken(response.token)
+                  return signupSucess()
                 }
-               signupFailure({error:'error in sending otp'})
+               return signupFailure({error:response})
                }
                 ),
             catchError((error)=>{
-                console.log(error); 
-                return of(signupFailure({error:error}))
+                return of(signupFailure({error:error.error.message}))
             })
         )
         )
     )
 })
 
+signupSuccess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(signupSucess),
+    switchMap(() => {
+      this.router.navigate(['/otp']);
+      return of(navigateToOtp()); // Dispatch navigateToOtp action
+    })
+  )
+)
 
 }
