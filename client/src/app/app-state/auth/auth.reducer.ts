@@ -33,8 +33,7 @@ import { login, loginFailure, loginSuccess, otpVerification, otpVerificationFail
                 email:action.payload.email,
                 mobile:action.payload.mobile,
                 gender:action.payload.gender,
-                token:action.payload.token,
-                isLoggedIn:action.payload.isLoggedIn
+                isLoggedIn:true,
             }
         }),
         on(login,(state,action)=>{

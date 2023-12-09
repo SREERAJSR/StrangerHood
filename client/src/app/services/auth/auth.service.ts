@@ -13,8 +13,16 @@ export class AuthService {
     return this.http.post(`${this.URL}/api/user/register`,{userData})
   }
 
+  user_otp_verification(otp:string){
+    return this.http.post(`${this.URL}/api/user/otp`,{otp})
+  }
+
   setToken(token:string){
     localStorage.setItem('token',token)
+  }
+
+  getToken():string|null{
+    return localStorage.getItem('token')
   }
 
 }
