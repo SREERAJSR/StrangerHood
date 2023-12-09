@@ -1,44 +1,43 @@
 
-import { Request,Response } from "express";
+import { NextFunction, Request,Response } from "express";
 import  { User_Struct, clientUserInfo, otpRequestBody, userDbStructure, userLoginBody, userOtpDecodedData}  from "../types/user_interface";
 import { checkEmailIsAlreadyRegistered, hashThePassword, sendOtp, verifyTheOtp, verifyThePassword} from "../services/userAuth";
 import User from "../model/user_schema";
 import { createToken, extractDataFromToken } from "../services/jwtAuth";
 import { saveUserInDb } from "../services/userDb";
 import { HttpStatus } from "../types/http";
+import AppError from "../utils/AppError";
 
 
-export  const registerUser= async(req:Request,res:Response)=>{
+export  const registerUser= async(req:Request,res:Response,next:NextFunction)=>{
 
     try{
-        const userRegisterDetails:User_Struct ={
-            firstname:req.body.firstname,
-            lastname: req.body.lastname,
-            email: req.body.email,
-            mobile: req.body.mobile,
-            gender: req.body.gender,
-            password: req.body.password,
-            renteredpassword: req.body.renteredpassword
-        }
-        const existingUser:boolean|userDbStructure = await checkEmailIsAlreadyRegistered(userRegisterDetails.email)
-        if(existingUser){
-            res.status(400).json({error:'Email is already registerd'});
-        }
-        if(userRegisterDetails.password !==userRegisterDetails.renteredpassword){
-            res.status(401).json({"error":"password and rentered password are not same"})
-        }
-        const hashedPass: string | undefined = await hashThePassword(userRegisterDetails.password)
-        if(!hashedPass) throw new Error('password hasing error')
-        userRegisterDetails.password = hashedPass;
-        userRegisterDetails.renteredpassword= hashedPass
-        const otpStatus :string | undefined = await sendOtp(userRegisterDetails.mobile)
-        console.log(otpStatus,'from here');
-        const token:string |boolean=  await createToken(userRegisterDetails)
-        res.status(202).json({"token":token,"otp-status":otpStatus})
+        console.log(req.body);
+        const userRegisterDetails=req.body.userData as User_Struct 
+        console.log(userRegisterDetails);
+         const existingUser= await checkEmailIsAlreadyRegistered(userRegisterDetails.email)
+         if(!existingUser){
+            if(userRegisterDetails.password !==userRegisterDetails.renteredpassword){
+              throw  new AppError('passwords are not same',HttpStatus.BAD_REQUEST)
+            }
+            const hashedPass: string | undefined = await hashThePassword(userRegisterDetails.password)
 
+            if(!hashedPass) throw new AppError('password hasing error',HttpStatus.INTERNAL_SERVER_ERROR)
+
+            userRegisterDetails.password = hashedPass;
+            userRegisterDetails.renteredpassword= hashedPass
+
+            const otpStatus :string | undefined = await sendOtp(userRegisterDetails.mobile)
+
+            if(otpStatus !=='pending')
+            {throw new AppError('Twilio otp sending failed',HttpStatus.INTERNAL_SERVER_ERROR)}
+            else{
+                const token:string=  await createToken(userRegisterDetails)
+                res.status(202).json({"token":token,"otpStatus":otpStatus})
+            }
+         }
     }catch(error){
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        next(error)
     } 
 
  
@@ -82,7 +81,7 @@ export async function loginUser(req: Request, res: Response) {
         if (!existingUser) {
             return res.status(HttpStatus.UNAUTHORIZED).json({ "error": "You are not an existing user with this email" });
         }
-        const user: userDbStructure = existingUser as userDbStructure;
+        const user: userDbStructure = existingUser as any
         const status: boolean = await verifyThePassword(password, user.password);
         if (status===false) {
             throw new Error("Password is not correct");

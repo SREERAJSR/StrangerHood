@@ -2,21 +2,19 @@
 import configKeys from '../configs/configs';
 import { User_Struct, userOtpDecodedData } from '../types/user_interface';
 import { reject } from 'promise';
+import AppError from '../utils/AppError';
 
 const ACCESSTOKEN_SECRET_KEY:string= configKeys().ACCESSTOKEN_SECRET_KEY;
 
-export const createToken = async(userData:any):Promise<string |boolean>=>{
+export const createToken = async(userData:any):Promise<string>=>{
     try{
         const token:string =  await jwt.sign(userData,ACCESSTOKEN_SECRET_KEY,{expiresIn:'100 min'})
         return token
-    }catch(err){
-        console.log(err);
-        return false
+    }catch(err:any){
+        throw new AppError(err.message,err.statusCode)
     }
 
       }  
-
-
     export  async  function extractDataFromToken (token : string):Promise<userOtpDecodedData |undefined >{
  
         try {

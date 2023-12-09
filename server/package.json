@@ -9,6 +9,7 @@
   "author": "Sreeraj sr",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.9",

@@ -6,24 +6,23 @@ import { User_Struct, userDbStructure } from "../types/user_interface";
 import jwt from 'jsonwebtoken';
 import configKeys from "../configs/configs";
 import { Twilio } from "twilio";
+import AppError from "../utils/AppError";
+import { HttpStatus } from "../types/http";
+import { NextFunction } from "express";
 
 const accountSid = configKeys().TWILIO_SID
 const authToken = configKeys().TWILIO_AUTHTOKEN
 const verifySid = configKeys().TWILIO_VERIFY_SID
 
-export const checkEmailIsAlreadyRegistered = async (email: string): Promise<userDbStructure |boolean> => {
+export const checkEmailIsAlreadyRegistered = async (email: string):Promise<boolean>=> {
     try {
-      // Find the user with the given email
       const existingUser = await User.findOne({ email: email });
-      // If the user exists, return true; otherwise, return false
-      if(!existingUser){
-        return false
+      if(existingUser){
+        throw new AppError('Email is already registerd',HttpStatus.BAD_REQUEST)
       }
-      return existingUser
-    } catch (error) {
-      // Handle any errors that occur during the check
-      console.error(error);
-      return false; // Assuming false means an error or email not registered
+      return false
+    } catch (error:any) {
+      throw new AppError(error.message, error.statusCode);
     }
   };
   export async function hashThePassword(password: string): Promise<string | undefined> {
@@ -31,35 +30,23 @@ export const checkEmailIsAlreadyRegistered = async (email: string): Promise<user
       const saltRounds: number = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
       return hashedPassword;
-    } catch (error) {
-      console.error(error);
-      return undefined;
+    } catch (error:any) {
+throw new AppError(error.message,error.statusCode)
     }
   }
 
-  
-
   export const sendOtp= async(mobile:number):Promise<string|undefined>=>{
 
-    try{ const client = new Twilio(accountSid, authToken);
-      await client.verify.v2
+    try{ 
+    const client = new Twilio(accountSid, authToken);
+     const verificationStatus=  await client.verify.v2
      .services(verifySid)
      .verifications.create({ to: `+91 ${mobile}`, channel: "sms" })
-     .then((verification) =>{
-        console.log(verification.status,'dfsdfsddf')
-       //  resolve(verification.status) 
-       return verification.status
-     }) 
+     return verificationStatus.status
 
-    }catch(err){
-      console.log(err+'errrrrrrr');
-      return undefined
-    } 
-     
-
-        
-
-     
+    }catch(err:any){
+       throw new AppError(err.message,err.statusCode)
+      }
 }
 export async function verifyTheOtp(otp: string, mobile: string): Promise<string | undefined> {
   try {
