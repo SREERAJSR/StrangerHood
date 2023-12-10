@@ -25,7 +25,7 @@ export const checkEmailIsAlreadyRegistered = async (email: string):Promise<boole
       throw new AppError(error.message, error.statusCode);
     }
   };
-  export async function hashThePassword(password: string): Promise<string | undefined> {
+  export async function hashThePassword(password: string): Promise<string> {
     try {
       const saltRounds: number = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);

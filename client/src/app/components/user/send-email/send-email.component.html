@@ -1,0 +1,35 @@
+<div class="container-fluid">
+
+    <div class="row mx-auto justify-content-center ">
+
+        <div class="col-12 login-div">
+          
+            <mat-card class="login-card mx-auto mt-5 justify-content-center ">
+                <div>
+                    <h2 class="p-3 text-center" >Enter your registered email</h2>
+                </div>
+                <form  [formGroup]="sendEmailformControl" (ngSubmit)="onSubmitForm()">
+                        
+                    <div class="form-area ">
+                    <mat-form-field   color="primary" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput formControlName="email" placeholder="abc@gmail.com">
+                        <mat-error *ngIf="sendEmailformControl.get('email')?.hasError('email') &&
+                        !sendEmailformControl.get('Email')?.hasError('required')">Please enter a valid email address </mat-error>
+                       <mat-error *ngIf="sendEmailformControl.get('email')?.hasError('required')" >Email is <strong>Required</strong></mat-error>
+                    </mat-form-field>
+                </div>
+                <p [hidden]="!sendMail" class="text-end email-message"  ><span  style="color: green;">Check you mail</span></p>
+                    <div class="button-area  text-center ">
+                        <div class="login-button">
+                            <button mat-raised-button color [disabled]="!sendEmailformControl.valid"  color="primary">Submit</button>
+                        </div>
+                    </div>
+                </form> 
+
+              </mat-card>
+        </div>
+    
+    </div>
+
+</div>

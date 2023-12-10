@@ -1,7 +1,7 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserLoginActionProps } from 'src/app/models/user.models';
+import { ResetPasswordPayloadInterface, UserLoginActionProps } from 'src/app/models/user.models';
 
 @Injectable({
   providedIn: 'root'
@@ -31,4 +31,11 @@ export class AuthService {
     return this.http.post(`${this.URL}/api/user/login`,{loginData})
   }
 
+  sendEmail(email:string){
+    return this.http.post(`${this.URL}/api/user/send_email`,{email})
+  }
+
+  resetPassword(payload:ResetPasswordPayloadInterface ){
+    return this.http.patch(`${this.URL}/api/user/reset_password`,{payload})
+  }
 }

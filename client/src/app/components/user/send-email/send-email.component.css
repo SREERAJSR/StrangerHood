@@ -1,0 +1,47 @@
+
+.container-fluid {
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+  }
+  .row{
+    width: 80%;
+    height: 80%;
+    background-image: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+
+
+  }
+
+.login-div{
+  background-image: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+border: 2px ;
+
+}
+.login-card{
+  background-color: white;
+  border-radius: 30px;
+  height: 80%;
+  align-content: center;
+width: 50%;
+overflow: hidden;
+}
+
+@media only screen and (max-width:800px) {
+  .login-card{
+    width: 100% !important;
+
+  }}
+mat-form-field {
+width: 89%;
+
+margin-left: 10px;
+}
+
+
+.login-button button{
+  width: 100px  ;
+}
+.email-message{
+    margin-right: 100px;
+}
+

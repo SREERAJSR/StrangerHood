@@ -15,6 +15,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './app-state/auth/auth.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { SendEmailComponent } from './components/user/send-email/send-email.component';
+import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     LoginComponent,
     SignupComponent,
     SignupOtpComponent,
+    SendEmailComponent,
+    ResetPasswordComponent,
 
 
   ],
