@@ -6,11 +6,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 
 const materials=[MatInputModule,MatButtonModule,MatDividerModule
-,MatFormFieldModule,MatIconModule,MatCardModule,MatRadioModule]
+,MatFormFieldModule,MatIconModule,MatCardModule,MatRadioModule,MatSidenavModule]
 
 @NgModule({
   imports: [materials],

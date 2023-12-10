@@ -18,6 +18,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { SendEmailComponent } from './components/user/send-email/send-email.component';
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 import { ErrorComponent } from './components/error/error.component';
+import { HomeComponent } from './components/user/home/home.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ErrorComponent } from './components/error/error.component';
     SendEmailComponent,
     ResetPasswordComponent,
     ErrorComponent,
+    HomeComponent,
 
 
   ],

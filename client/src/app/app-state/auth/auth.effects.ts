@@ -64,6 +64,16 @@ this.actions$.pipe(
 )) 
 
 
+signupSucess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(otpVerificationSuccess),
+    switchMap(() => {
+      this.router.navigate(['/']);
+      return of(navigateToOtp()); // Dispatch navigateToOtp action
+    })
+  )
+)
+
 
 loginUser$ = createEffect(() =>
   this.actions$.pipe(
@@ -85,5 +95,16 @@ loginUser$ = createEffect(() =>
     )
   )
 );
+loginSuces$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(loginSuccess),
+    switchMap(() => {
+      this.router.navigate(['/']);
+      return of(navigateToOtp()); // Dispatch navigateToOtp action
+    })
+  )
+)
 }
+
+
 

@@ -6,8 +6,10 @@ import { LoginComponent } from './components/user/login/login.component';
 import { SendEmailComponent } from './components/user/send-email/send-email.component';
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 import { ErrorComponent } from './components/error/error.component';
+import { HomeComponent } from './components/user/home/home.component';
 
 const routes: Routes = [
+  {path:"",component:HomeComponent},
   {path:"signup", component:SignupComponent},
   {path:"otp",component:SignupOtpComponent},
   {path:"login",component:LoginComponent},
