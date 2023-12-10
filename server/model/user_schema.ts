@@ -39,6 +39,9 @@ const userSchema = new  Schema<userDbStructure>({
     isActive:{
         type:Boolean,
         default:true
+    },
+    isAdmin:{
+        type:Boolean
     }
 })
 

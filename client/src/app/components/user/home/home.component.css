@@ -7,10 +7,10 @@
   .example-sidenav-content {
     display: flex;
     height: 100%;
-    align-items: center;
-    justify-content: center;
+    justify-content:center;
+    background-image: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
   }
   
   .example-sidenav {
-    padding: 20px;
+    padding: 5%;
   }

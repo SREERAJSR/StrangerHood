@@ -7,9 +7,10 @@ import { SendEmailComponent } from './components/user/send-email/send-email.comp
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/user/home/home.component';
+import { userAuthGuard } from './route-guards/user-auth.guard';
 
 const routes: Routes = [
-  {path:"",component:HomeComponent},
+  {path:"",component:HomeComponent,canActivate:[userAuthGuard]},
   {path:"signup", component:SignupComponent},
   {path:"otp",component:SignupOtpComponent},
   {path:"login",component:LoginComponent},

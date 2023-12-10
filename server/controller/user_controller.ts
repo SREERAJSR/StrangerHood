@@ -26,7 +26,7 @@ export  const registerUser= async(req:Request,res:Response,next:NextFunction)=>{
             userRegisterDetails.password = hashedPass;
             userRegisterDetails.renteredpassword= hashedPass 
             const otpStatus :string | undefined = await sendOtp(userRegisterDetails.mobile)
-console.log(otpStatus);
+
             if(otpStatus !=='pending')
             {throw new AppError('Twilio otp sending failed',HttpStatus.INTERNAL_SERVER_ERROR)}
             else{

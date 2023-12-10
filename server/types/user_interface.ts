@@ -13,7 +13,8 @@ export  interface  User_Struct{
 export interface userDbStructure extends User_Struct{
     createdAt:Date,
     _id:ObjectId,
-    isActive:boolean
+    isActive:boolean,
+    isAdmin?:boolean
 }
 
 export interface otpRequestBody {

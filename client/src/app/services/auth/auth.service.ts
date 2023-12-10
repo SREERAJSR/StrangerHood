@@ -18,15 +18,6 @@ export class AuthService {
   user_otp_verification(otp:string){
     return this.http.post(`${this.URL}/api/user/otp`,{otp})
   }
-
-  setToken(token:string){
-    localStorage.setItem('token',token)
-  }
-
-  getToken():string|null{
-    return localStorage.getItem('token')
-  }
-
   loginUser(loginData:UserLoginActionProps){
     return this.http.post(`${this.URL}/api/user/login`,{loginData})
   }
@@ -37,5 +28,16 @@ export class AuthService {
 
   resetPassword(payload:ResetPasswordPayloadInterface ){
     return this.http.patch(`${this.URL}/api/user/reset_password`,{payload})
+  }
+
+  setToken(token:string){
+    localStorage.setItem('token',token)
+  }
+
+  getToken():string|null{
+    return localStorage.getItem('token')
+  }
+  deleteToken():void{
+localStorage.removeItem('token')
   }
 }
