@@ -5,13 +5,15 @@ import { SignupOtpComponent } from './components/user/signup-otp/signup-otp.comp
 import { LoginComponent } from './components/user/login/login.component';
 import { SendEmailComponent } from './components/user/send-email/send-email.component';
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
+import { ErrorComponent } from './components/error/error.component';
 
 const routes: Routes = [
   {path:"signup", component:SignupComponent},
   {path:"otp",component:SignupOtpComponent},
   {path:"login",component:LoginComponent},
   {path:"send_email",component:SendEmailComponent},
-  {path:"reset_password/:token",component:ResetPasswordComponent}
+  {path:"reset_password/:token",component:ResetPasswordComponent},
+  {path:"**",component:ErrorComponent}
 ];
 
 @NgModule({
