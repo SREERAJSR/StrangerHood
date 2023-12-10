@@ -56,7 +56,7 @@ try{
 
 let otpVerified :string | undefined = await verifyTheOtp(otp,decodedData.mobile)
 
-console.log(otpVerified,'from controller');
+console.log(otpVerified,'from controller');  
 if(otpVerified ==='approved'){
 const userData = await saveUserInDb(decodedData)
 console.log(userData);
@@ -69,34 +69,32 @@ res.status(HttpStatus.CREATED).json({"message":"register sucess","userData":user
 }
 
 }
-export async function loginUser(req: Request, res: Response) {
+export async function loginUser(req: Request, res: Response,next:NextFunction) {
     try {
-        const { email, password }: userLoginBody = req.body;
-        const existingUser: boolean | userDbStructure = await checkEmailIsAlreadyRegistered(email);
-
+        console.log(req.body.loginData);
+        const { email, password }: userLoginBody = req.body.loginData;
+        const existingUser = await User.findOne({email:email})
         if (!existingUser) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({ "error": "You are not an existing user with this email" });
+            throw new AppError('this email hasnt account',HttpStatus.BAD_REQUEST)
         }
-        const user: userDbStructure = existingUser as any
+        const user: userDbStructure = existingUser as userDbStructure
         const status: boolean = await verifyThePassword(password, user.password);
         if (status===false) {
-            throw new Error("Password is not correct");
+            throw new AppError('password is not correct',HttpStatus.BAD_REQUEST)
         }
         const userClientInfo: clientUserInfo = {
             firstname: user.firstname,
             lastname: user.lastname,
             gender: user.gender,
-            mobile: user.mobile
+            mobile: user.mobile,
+            isActive:user.isActive,
+            email:user.email
         };
         const token: string | boolean = await createToken(userClientInfo);
-        if (!token) {
-            throw new Error('Token error');
-        }
-
-        res.status(HttpStatus.ACCEPTED).json({ "token": token, userClientInfo });
-
+        res.status(HttpStatus.ACCEPTED).json({ "token": token, userClientInfo ,"status":true });
     } catch (err:any) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ "error": "Internal Server Error", "message": err.message });
+
+next(err)
     }
 
 }

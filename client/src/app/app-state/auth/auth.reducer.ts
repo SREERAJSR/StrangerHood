@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { authState } from "./auth.state";
-import { login, loginFailure, loginSuccess, otpVerification, otpVerificationFailure, otpVerificationSuccess, signup, signupFailure, signupSucess } from "./auth.actions";
+import {  loginFailure, loginSuccess, otpVerification, otpVerificationFailure, otpVerificationSuccess, signup, signupFailure, signupSucess, userlogin } from "./auth.actions";
 
     export const authReducer = createReducer(authState,
         on(signup,(state,action)=>{
@@ -36,7 +36,7 @@ import { login, loginFailure, loginSuccess, otpVerification, otpVerificationFail
                 isLoggedIn:true,
             }
         }),
-        on(login,(state,action)=>{
+        on(userlogin,(state,action)=>{
             return{
                 ...state,
             }
@@ -50,7 +50,7 @@ import { login, loginFailure, loginSuccess, otpVerification, otpVerificationFail
                 mobile:action.payload.mobile,
                 gender:action.payload.gender,
                 token:action.payload.token,
-                isLoggedIn:action.payload.isLoggedIn
+                isLoggedIn:true
             
 
             }

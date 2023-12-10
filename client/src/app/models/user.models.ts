@@ -9,6 +9,6 @@ export interface UserSignUpActionProps{
 }
 
 export interface UserLoginActionProps{
-    email:string,
-    password:string
+    email:string|null,
+    password:string|null
 }
