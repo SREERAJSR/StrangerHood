@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserLoginActionProps } from 'src/app/models/user.models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,10 @@ export class AuthService {
 
   getToken():string|null{
     return localStorage.getItem('token')
+  }
+
+  loginUser(loginData:UserLoginActionProps){
+    return this.http.post(`${this.URL}/api/user/login`,{loginData})
   }
 
 }

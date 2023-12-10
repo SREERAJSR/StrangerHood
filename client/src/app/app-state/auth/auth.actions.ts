@@ -13,7 +13,7 @@ export const otpVerificationSuccess = createAction('[OTP Page] OTP Verification 
 export const otpVerificationFailure = createAction('[OTP Page] OTP Verification Failure', props<{ error: any }>());
 
 // Login actions
-export const login = createAction('[Login Page] Login', props<{ payload: UserLoginActionProps }>());
+export const userlogin = createAction('[Login Page] Login', props<{payload:UserLoginActionProps}>());
 export const loginSuccess = createAction('[Login Page] Login Success', props<{payload:AuthStateInterface }>());
 export const loginFailure = createAction('[Login Page] Login Failure', props<{ error: any }>());
 

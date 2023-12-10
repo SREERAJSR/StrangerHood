@@ -1,15 +1,15 @@
-import { Injectable, effect } from "@angular/core";
+import { Injectable, effect, inject } from "@angular/core";
 import { Actions, EffectSources, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
 import { AuthService } from "src/app/services/auth/auth.service";
-import { login, loginSuccess, navigateToOtp, otpVerification, otpVerificationFailure, otpVerificationSuccess, signup, signupFailure, signupSucess } from "./auth.actions";
+import {  loginFailure, loginSuccess, navigateToOtp, otpVerification, otpVerificationFailure, otpVerificationSuccess, signup, signupFailure, signupSucess, userlogin } from "./auth.actions";
 import { Router } from "@angular/router";
 import { SignupOtpComponent } from "src/app/components/user/signup-otp/signup-otp.component";
 
 
 
 
-@Injectable()
+@Injectable() 
 export  class AuthEffects{
 
     constructor(private actions$:Actions ,
@@ -63,4 +63,27 @@ this.actions$.pipe(
     })
 )) 
 
+
+
+loginUser$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(userlogin),
+    switchMap((action) =>
+      this.authService.loginUser(action.payload).pipe(
+        map((response: any): any => {
+            console.log(response);
+          if (response.status === true) {
+            this.authService.setToken(response.token)
+            return loginSuccess({ payload: response.userClientInfo });
+          }
+          return loginFailure({ error: response.error.message });
+        }),
+        catchError((error) =>{        
+        return of(loginFailure({ error: error.error.message }))
+    })
+      )
+    )
+  )
+);
 }
+
