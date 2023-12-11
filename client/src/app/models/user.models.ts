@@ -12,6 +12,9 @@ export interface UserLoginActionProps{
     email:string|null,
     password:string|null
 }
+export interface AdminLoginPayload extends UserLoginActionProps{
+    
+}
 
 export interface ResetPasswordPayloadInterface{
     password:string|null,

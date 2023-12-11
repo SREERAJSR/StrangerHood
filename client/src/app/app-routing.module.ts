@@ -7,16 +7,22 @@ import { SendEmailComponent } from './components/user/send-email/send-email.comp
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/user/home/home.component';
-import { userAuthGuard } from './route-guards/user-auth.guard';
+import { adminAuthGuard, adminLoginAuthGuard, userAuthGuard, userLoginAuthGuard } from './route-guards/auth.guard';
+import { AdminComponent } from './components/admin/admin/admin.component';
+import { AdminHomepageComponent } from './components/admin/admin-homepage/admin-homepage.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent,canActivate:[userAuthGuard]},
   {path:"signup", component:SignupComponent},
   {path:"otp",component:SignupOtpComponent},
-  {path:"login",component:LoginComponent},
+  {path:"login",component:LoginComponent,canActivate:[userLoginAuthGuard]},
   {path:"send_email",component:SendEmailComponent},
   {path:"reset_password/:token",component:ResetPasswordComponent},
-  {path:"**",component:ErrorComponent}
+
+
+{path:"admin_login",component:AdminComponent,canActivate:[adminLoginAuthGuard]},
+{path:"admin",component:AdminHomepageComponent,canActivate:[adminAuthGuard]},
+{path:"**",component:ErrorComponent}
 ];
 
 @NgModule({

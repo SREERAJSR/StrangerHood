@@ -1,4 +1,7 @@
 import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { userLogout } from 'src/app/app-state/auth/auth.actions';
+import { AuthStateInterface } from 'src/app/models/state.models';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -8,10 +11,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class HomeComponent {
   authServices = inject(AuthService)
+  store = inject(Store<{auth:AuthStateInterface}>);
   showFiller = false;
 
   logout(){
-    this.authServices.deleteToken()
-    window.location.reload()
+    this.store.dispatch(userLogout())
   }
 }

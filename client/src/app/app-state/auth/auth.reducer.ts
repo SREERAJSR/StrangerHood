@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { authState } from "./auth.state";
-import {  loginFailure, loginSuccess, otpVerification, otpVerificationFailure, otpVerificationSuccess, signup, signupFailure, signupSucess, userlogin } from "./auth.actions";
+import {  adminLogin, adminLoginFailure, adminLoginSucess, adminLogout, adminLogoutsucess, loginFailure, loginSuccess, navigateAdminHomePage, otpVerification, otpVerificationFailure, otpVerificationSuccess, signup, signupFailure, signupSucess, userLogout, userlogin } from "./auth.actions";
 
     export const authReducer = createReducer(authState,
         on(signup,(state,action)=>{
@@ -51,14 +51,62 @@ import {  loginFailure, loginSuccess, otpVerification, otpVerificationFailure, o
                 gender:action.payload.gender,
                 token:action.payload.token,
                 isLoggedIn:true
-            
-
             }
         }),
         on(loginFailure,(state,action)=>{
             return{
                 ...state,
                 loginError:action.error
+            }
+        }),
+        on(userLogout,(state,action)=>{
+            return{
+                ...state,
+                firstname:'',
+                lastname:'',
+                email:'',
+                mobile:'',
+                gender:'',
+                token:'',
+                isLoggedIn:false
+            }
+        })
+        ,
+        on(adminLogin,(state,action)=>{
+            return{
+                ...state,
+            }
+        }),
+        on(adminLoginSucess,(state,action)=>{
+            return{
+                ...state,
+                Admin:action.payload.admin,
+                admin:true,
+                adminLoginError:''
+            }
+        }),
+        on(adminLoginFailure,(state,action)=>{
+            return{
+                ...state,
+                adminLoginError:action.error,
+                admin:false
+                
+            }
+        }),
+        on(navigateAdminHomePage,(state,action)=>{
+            return{
+                ...state
+            }
+        }),
+        on(adminLogout,(state,action)=>{
+            return{
+                ...state,
+                admin:false
+            }
+        }),
+        on(adminLogoutsucess,(state,action)=>{
+            return{
+                ...state
             }
         })
     )

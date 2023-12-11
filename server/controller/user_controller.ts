@@ -70,7 +70,7 @@ res.status(HttpStatus.CREATED).json({"message":"register sucess","userData":user
 }
 export async function loginUser(req: Request, res: Response,next:NextFunction) {
     try {
-        console.log(req.body.loginData);
+
         const { email, password }: userLoginBody = req.body.loginData;
         const existingUser = await User.findOne({email:email})
         if (!existingUser) {

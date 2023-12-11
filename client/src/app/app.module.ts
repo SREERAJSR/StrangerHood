@@ -19,6 +19,8 @@ import { SendEmailComponent } from './components/user/send-email/send-email.comp
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/user/home/home.component';
+import { AdminComponent } from './components/admin/admin/admin.component';
+import { AdminHomepageComponent } from './components/admin/admin-homepage/admin-homepage.component';
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import { HomeComponent } from './components/user/home/home.component';
     ResetPasswordComponent,
     ErrorComponent,
     HomeComponent,
+    AdminComponent,
+    AdminHomepageComponent,
 
 
   ],

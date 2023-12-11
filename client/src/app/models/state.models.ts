@@ -8,5 +8,7 @@ export interface AuthStateInterface{
     token?:string,
     signupError?:string,
     loginError?:string,
-    otpVerficationError?:string
+    otpVerficationError?:string,
+    admin?:boolean ,
+    adminLoginError?:string
 }

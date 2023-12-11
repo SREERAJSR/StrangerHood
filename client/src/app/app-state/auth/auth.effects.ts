@@ -1,8 +1,8 @@
 import { Injectable, effect, inject } from "@angular/core";
 import { Actions, EffectSources, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
+import { Observable, catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
 import { AuthService } from "src/app/services/auth/auth.service";
-import {  loginFailure, loginSuccess, navigateToOtp, otpVerification, otpVerificationFailure, otpVerificationSuccess, signup, signupFailure, signupSucess, userlogin } from "./auth.actions";
+import {  adminLogin, adminLoginFailure, adminLoginSucess, adminLogout, adminLogoutsucess, loginFailure, loginSuccess, navigateAdminHomePage, navigateToHome, navigateToOtp, otpVerification, otpVerificationFailure, otpVerificationSuccess, signup, signupFailure, signupSucess, userLogout, userlogin } from "./auth.actions";
 import { Router } from "@angular/router";
 import { SignupOtpComponent } from "src/app/components/user/signup-otp/signup-otp.component";
 
@@ -104,7 +104,65 @@ loginSuces$ = createEffect(() =>
     })
   )
 )
-}
 
+userLogout$ = createEffect(()=>
+this.actions$.pipe(
+  ofType(userLogout),
+  switchMap(()=>{
+  this.authService.deleteToken();
+  this.router.navigate(['/login'])
+  return of(navigateToHome())
+  })
+)
+)
+
+
+//admin login effects
+
+adminLogin$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(adminLogin),
+    switchMap((action) =>
+      this.authService.adminLogin(action.payload).pipe(
+        map((response: any): any => {
+            console.log(response);
+          if (response.status === 'accepted') {
+            this.authService.setAdminToken(response.token)
+            return adminLoginSucess({ payload: response.message });
+          }
+          return adminLoginFailure({ error: response.error.message });
+        }),
+        catchError((error) =>{        
+          console.log(error);
+        return of(adminLoginFailure({ error: error.error.message }))
+    })
+      )
+    )
+  )
+);
+
+adminloginSucess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(adminLoginSucess),
+    switchMap(() => {
+      this.router.navigate(['/admin']);
+      return of(navigateAdminHomePage()); // Dispatch adminlogin action
+    })
+  )
+)
+
+adminlogoutSucess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(adminLogout),
+    switchMap(() => {
+      console.log('admin admin');
+      this.authService.deleteAdminToken()
+      if(!this.authService.getAdminToken())this.router.navigate(['/admin_login']);
+      return of(adminLogoutsucess()); 
+    })
+  )
+)
+
+}
 
 

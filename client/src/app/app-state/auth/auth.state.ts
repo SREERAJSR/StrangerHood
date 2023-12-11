@@ -9,5 +9,6 @@
         isLoggedIn:false,
         signupError:'',
         loginError:'',
-        otpVerficationError:''
+        otpVerficationError:'',
+        adminLoginError:''
     }
