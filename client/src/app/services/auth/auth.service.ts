@@ -65,6 +65,7 @@ localStorage.removeItem('token')
   //delete the admin token
   deleteAdminToken(){
     localStorage.removeItem('admin')
+
   }
 
   //get the admin token

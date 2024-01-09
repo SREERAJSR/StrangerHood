@@ -1,81 +1,89 @@
 
-  .container-fluid {
-    height: 100%;
-    width: 100%;
-    background-image: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
-  }
-  .row{
-    width: 80%;
-    height: 100%;
-    background-image: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
 
+*{
+  font-family: monospace;
+  color:purple
+}
 
-  }
-
-.login-div{
-  background-image: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
-border: 2px ;
+.left-section {
+box-shadow: -6px 6px 10px rgba(0, 0, 0, 0.1);
 
 }
-.login-card{
+
+.right-section {
+box-shadow: -6px 6px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+
+}
+.parent-div{
+  margin-top: 100px;
+  height: auto;
   background-color: white;
-  border-radius: 30px;
-  height: 80%;
-  align-content: center;
-width: 50%;
-overflow: hidden;
+  border-radius: 5px;
+
+    border-color: purple;
+    box-shadow: 1px 1px 10px ;
 }
 
-@media only screen and (max-width:800px) {
-  .login-card{
-    width: 100% !important;
+ @media (max-width: 576px) {
 
-  }
-  /* mat-form-field{
-    width: 100%;
-  }
-   */
-}
-mat-form-field {
-width: 89%;
+        .parent-div{
+          width: 80%;
+        }
+        .left-section{
+          display: none;
+        }
+    }
 
-margin-left: 10px;
+    .login-title{
+      text-align: center;
+      margin-top: 20px;
+      font-size: 30px;  
+      font-weight: bolder;
+
+        }
+
+        .user-credential{
+          margin-top: 40px;
+        }
+
+      .email,.password,.login-button{
+        margin-bottom: 40px;
+
+      }
+
+      mat-form-field{
+        width: 300px;
+      }
+      mat-error{
+        font-size: 10px;
+        width: 300px;
+      }
+
+
+    .forgot-password,
+.signup {
+  margin-top: 20px; /* Adjust as needed */
+  text-align: center;
+  width: 100%;
 }
+
+
+
 .forgot-password {
+  float: left;
+}
+
+.signup {
   float: right;
-
 }
 
-.forgot-password a{
+a{
   text-decoration: none;
-  color: grey;
-
-}
-
-.login-button button{
-  width: 100px  ;
-}
-
-#forgot-password-area{
-  float: right;
-  margin-right: 20px ;
-  display: inline;
-  
-}
-#forgot-password-area a{
-  text-decoration: none;
-  color: grey;
-
-}
-
-
-
-.google-login-area button{
-  width: 50%;
-margin-left: 100px;
-}
-.footer a{
-  text-decoration: none;
-  color: green;
-  
+  color: purple;
 }

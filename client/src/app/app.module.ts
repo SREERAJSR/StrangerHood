@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,9 +21,12 @@ import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/user/home/home.component';
 import { AdminComponent } from './components/admin/admin/admin.component';
 import { AdminHomepageComponent } from './components/admin/admin-homepage/admin-homepage.component';
+import { CustomModuleModule } from './custom-module/custom-module.module';
+
 
 
 @NgModule({
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     LoginComponent,
@@ -35,8 +38,6 @@ import { AdminHomepageComponent } from './components/admin/admin-homepage/admin-
     HomeComponent,
     AdminComponent,
     AdminHomepageComponent,
-
-
   ],
   imports: [
     BrowserModule,
