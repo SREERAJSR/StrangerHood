@@ -1,28 +1,32 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from '../app/app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './components/user/login/login.component';
+import { LoginComponent } from '../app/components/user/login/login.component';
 import { MaterialModule } from './material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SignupComponent } from './components/user/signup/signup.component';
-import { SignupOtpComponent } from './components/user/signup-otp/signup-otp.component';
+import { SignupComponent } from '../app/components/user/signup/signup.component';
+import { SignupOtpComponent } from '../app/components/user/signup-otp/signup-otp.component';
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './app-state/auth/auth.reducer';
+import { authReducer } from '../app/app-state/auth/auth.reducer';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from './app-state/auth/auth.effects';
+import { AuthEffects } from '../app/app-state/auth/auth.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { SendEmailComponent } from './components/user/send-email/send-email.component';
-import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
-import { ErrorComponent } from './components/error/error.component';
-import { HomeComponent } from './components/user/home/home.component';
-import { AdminComponent } from './components/admin/admin/admin.component';
-import { AdminHomepageComponent } from './components/admin/admin-homepage/admin-homepage.component';
-import { CustomModuleModule } from './custom-module/custom-module.module';
-import { NavbarComponent } from './components/user/navbar/navbar.component';
+import { AuthInterceptor } from '../app/interceptors/auth.interceptor';
+import { SendEmailComponent } from '../app/components/user/send-email/send-email.component';
+import { ResetPasswordComponent } from '../app/components/user/reset-password/reset-password.component';
+import { ErrorComponent } from '../app/components/error/error.component';
+import { HomeComponent } from '../app/components/user/home/home.component';
+import { AdminComponent } from '../app/components/admin/admin/admin.component';
+import { AdminHomepageComponent } from '../app/components/admin/admin-homepage/admin-homepage.component';
+import { NavbarComponent } from '../app/components/user/navbar/navbar.component';
+import { ConnectPageComponent } from '../app/components/user/connect-page/connect-page.component';
+import { ConnectFeatureComponent } from './components/user/connect-page/connect-feature/connect-feature.component';
+import { FriendsComponent } from './components/user/connect-page/friends/friends.component';
+import { RequestsComponent } from './components/user/connect-page/requests/requests.component';
+import { CallsHistoryComponent } from './components/user/connect-page/calls-history/calls-history.component';
 
 
 
@@ -40,6 +44,11 @@ import { NavbarComponent } from './components/user/navbar/navbar.component';
     AdminComponent,
     AdminHomepageComponent,
     NavbarComponent,
+    ConnectPageComponent,
+    ConnectFeatureComponent,
+    FriendsComponent,
+    RequestsComponent,
+    CallsHistoryComponent,
   ],
   imports: [
     BrowserModule,

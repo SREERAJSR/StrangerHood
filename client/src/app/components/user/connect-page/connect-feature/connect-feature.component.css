@@ -1,0 +1,50 @@
+   *{
+    font-family: monospace;
+   }
+   .main{
+    width: 100%;
+
+
+}
+.user-photo-section{
+    margin-top: 15px;
+    padding-bottom: 10px;
+
+}
+.photo img{
+    width: 260px;
+     height: 260px;
+     border-radius: 50%;  
+
+}
+
+.photo{
+
+    display: inline-block;
+    box-shadow: 1px 1px 15px purple;
+         border-radius: 50%;    
+
+}
+.name-section{
+padding-top: 20px;
+}
+ .photo p{
+    font-size: 24px; font-weight: bolder;
+    color: purple;
+}
+
+.gender-selection-area{
+    text-align: center  ;
+    margin-top: 10px;
+        color: purple;
+        margin-bottom: 20px;
+}
+.male,.female,.any{
+    box-shadow: inset 1px 1px 15px #0d6efd;;
+}
+
+.connect-button{
+
+    width: 150px;
+
+}
