@@ -22,6 +22,7 @@ import { HomeComponent } from './components/user/home/home.component';
 import { AdminComponent } from './components/admin/admin/admin.component';
 import { AdminHomepageComponent } from './components/admin/admin-homepage/admin-homepage.component';
 import { CustomModuleModule } from './custom-module/custom-module.module';
+import { NavbarComponent } from './components/user/navbar/navbar.component';
 
 
 
@@ -38,6 +39,7 @@ import { CustomModuleModule } from './custom-module/custom-module.module';
     HomeComponent,
     AdminComponent,
     AdminHomepageComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

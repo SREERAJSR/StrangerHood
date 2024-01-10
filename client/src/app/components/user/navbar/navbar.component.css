@@ -1,0 +1,16 @@
+nav{
+    background-color: #3f51b5;
+
+}
+
+a{
+    color: white;
+}
+
+ a i:hover{
+    color: wheat;
+}
+
+ a:hover{
+    border-color: purple;
+ }
